@@ -86,35 +86,30 @@ public class Player : MonoBehaviour
 
     void MoveUpdate()
     {
-        if (GameManager.Instance.IsPause())
+        if(GameManager.Instance.IsPause())
         {
             return;
-            // this 
         }
         if (hp <= 0) return;
 
         if (Input.GetMouseButtonDown(0))
         {
             isMouseDown = true;
-            // 按下瞬间：鼠标屏幕坐标 → 世界坐标
-            lastMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            // z值固定，避免相机深度影响
-            lastMousePosition.z = transform.position.z;
+            lastMousePosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         }
         if (Input.GetMouseButtonUp(0))
         {
             isMouseDown = false;
         }
-        if (isMouseDown)
+        if(isMouseDown)
         {
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mouseWorldPos.z = transform.position.z;
+            Vector3 offset = Camera.main.ScreenToViewportPoint(Input.mousePosition) - lastMousePosition;
 
-            Vector3 offset = mouseWorldPos - lastMousePosition;
-            transform.position += offset;
+            transform.position = transform.position + offset;
 
             CheckPosition();
-            lastMousePosition = mouseWorldPos;
+
+            lastMousePosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         }
     }
 
