@@ -2575,7 +2575,7 @@ MonoBehaviour:
   award1SpawnInterval: 8
   award2Prefab: {fileID: 756572751635747814, guid: 25f78a39ed7d940bf83992a3e6b35913, type: 3}
   award2SpawnInterval: 13
-  award3Prefab: {fileID: 0}
+  award3Prefab: {fileID: 7305217233242451808, guid: 21495b16a19ad4840ae01650168dfdd9, type: 3}
   award3SpawnInterval: 17
 --- !u!1 &1637110404
 GameObject:
