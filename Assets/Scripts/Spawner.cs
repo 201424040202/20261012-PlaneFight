@@ -20,14 +20,18 @@ public class Spawner : MonoBehaviour
     public GameObject award2Prefab;
     public float award2SpawnInterval = 7;
 
+    public GameObject award3Prefab;
+    public float award3SpawnInterval = 11;
+
     // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating("SpawnEnemy0", 1, enemy0SpawnInterval);
-        InvokeRepeating("SpawnEnemy1", 1, enemy1SpawnInterval);
-        InvokeRepeating("SpawnEnemy2", 1, enemy2SpawnInterval);
-        InvokeRepeating("SpawnAward1", 1, award1SpawnInterval);
-        InvokeRepeating("SpawnAward2", 1, award2SpawnInterval);
+        InvokeRepeating("SpawnEnemy1", 2, enemy1SpawnInterval);
+        InvokeRepeating("SpawnEnemy2", 3, enemy2SpawnInterval);
+        InvokeRepeating("SpawnAward1", 4, award1SpawnInterval);
+        InvokeRepeating("SpawnAward2", 5, award2SpawnInterval);
+        InvokeRepeating("SpawnAward3", 6, award3SpawnInterval);
 
     }
 
@@ -65,6 +69,12 @@ public class Spawner : MonoBehaviour
     {
         float x = Random.Range(-1.96f, 1.96f);
         Instantiate(award2Prefab, new Vector3(x, transform.position.y, transform.position.z), transform.rotation);
+    }
+
+    void SpawnAward3()
+    {
+        float x = Random.Range(-1.96f, 1.96f);
+        Instantiate(award3Prefab, new Vector3(x, transform.position.y, transform.position.z), transform.rotation);
     }
 
 }

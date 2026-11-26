@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI scoreTMP;
     public TextMeshProUGUI bombCountTMP;
+    public TextMeshProUGUI lifeCountTMP;
 
     public Button pauseButton;
     public Button resumeButton;
@@ -56,6 +57,11 @@ public class UIManager : MonoBehaviour
     public void UpdateBombCountUI(int count)
     {
         this.bombCountTMP.text = count + "";
+    }
+
+    public void UpdateLifeCountUI(int count)
+    {
+        this.lifeCountTMP.text = count + "";
     }
 
     void OnPauseButtonClick()

@@ -5,7 +5,8 @@ using UnityEngine;
 public enum AwardType
 {
     SuperGun,
-    Bomb
+    Bomb,
+    Life
 }
 
 public class Award : MonoBehaviour

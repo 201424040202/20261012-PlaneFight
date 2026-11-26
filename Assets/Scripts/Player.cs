@@ -22,8 +22,6 @@ public class Player : MonoBehaviour
     public GameObject gunRight;
     public GameObject gunLeft;
 
-    public int hp = 5;
-
     private float invincibleTime = 2;
     private bool isInvincible = false;
     private float invincibleTimer = 0;
@@ -54,7 +52,7 @@ public class Player : MonoBehaviour
 
     void IdleAnimationUpdate()
     {
-        if (hp <= 0) return;
+        if (!GameManager.Instance.IsAlive()) return;
         timer += Time.deltaTime;
         if(timer > 1f/frameRate)
         {
@@ -66,7 +64,7 @@ public class Player : MonoBehaviour
 
     void DeathAnimationUpdate()
     {
-        if (hp > 0) return;
+        if (GameManager.Instance.IsAlive()) return;
         timer += Time.deltaTime;
         if (timer > 1f / frameRate)
         {
@@ -86,30 +84,34 @@ public class Player : MonoBehaviour
 
     void MoveUpdate()
     {
-        if(GameManager.Instance.IsPause())
+        if (GameManager.Instance.IsPause())
         {
             return;
         }
-        if (hp <= 0) return;
+        if (!GameManager.Instance.IsAlive()) return;
 
         if (Input.GetMouseButtonDown(0))
         {
             isMouseDown = true;
-            lastMousePosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            // 按下瞬间：鼠标屏幕坐标 → 世界坐标
+            lastMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            // z值固定，避免相机深度影响
+            lastMousePosition.z = transform.position.z;
         }
         if (Input.GetMouseButtonUp(0))
         {
             isMouseDown = false;
         }
-        if(isMouseDown)
+        if (isMouseDown)
         {
-            Vector3 offset = Camera.main.ScreenToViewportPoint(Input.mousePosition) - lastMousePosition;
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mouseWorldPos.z = transform.position.z;
 
-            transform.position = transform.position + offset;
+            Vector3 offset = mouseWorldPos - lastMousePosition;
+            transform.position += offset;
 
             CheckPosition();
-
-            lastMousePosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            lastMousePosition = mouseWorldPos;
         }
     }
 
@@ -149,6 +151,10 @@ public class Player : MonoBehaviour
                 TransformToSuperGun();
                 getSuperGunAudio.Play();
             }
+            else if(collision.GetComponent<Award>().awardType == AwardType.Life)
+            {
+                GameManager.Instance.AddLife();
+            }
             else
             {
                 getBombAudio.Play();
@@ -161,8 +167,8 @@ public class Player : MonoBehaviour
         if(collision.tag == "Enemy" && isInvincible == false)
         {
             collision.SendMessage("TakeDamage");
-            this.hp--;
-            if(hp <= 0)
+            GameManager.Instance.SubLife();
+            if (!GameManager.Instance.IsAlive())
             {
                 // 死亡爆炸
                 TransformToDeath();

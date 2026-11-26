@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     }
 
     private int bombCount = 0;
+    private int lifeCount = 5; // 生命值
     private int score = 0;
 
     private GameState gameState = GameState.Playing;
@@ -61,6 +62,20 @@ public class GameManager : MonoBehaviour
     {
         bombCount--;
         UIManager.Instance.UpdateBombCountUI(bombCount);
+    }
+    public void AddLife()
+    {
+        lifeCount++;
+        UIManager.Instance.UpdateLifeCountUI(lifeCount);
+    }
+    public void SubLife()
+    {
+        lifeCount--;
+        UIManager.Instance.UpdateLifeCountUI(lifeCount);
+    }
+    public bool IsAlive()
+    {
+        return lifeCount > 0;
     }
     public void AddScore(int count)
     {

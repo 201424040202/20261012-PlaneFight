@@ -1,9 +1,9 @@
-﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Player.cs">
+﻿<Properties StartupConfiguration="{31E72173-C877-831B-9185-67FF22819148}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/AudioManager.cs">
     <Files>
       <File FileName="Assets/Scripts/Gun.cs" Line="32" Column="55" />
       <File FileName="Assets/Scripts/Spawner.cs" />
-      <File FileName="Assets/Scripts/AudioManager.cs" />
+      <File FileName="Assets/Scripts/AudioManager.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Award.cs" />
       <File FileName="Assets/Scripts/Background.cs" />
       <File FileName="Assets/Scripts/BgControl.cs" />
@@ -12,7 +12,7 @@
       <File FileName="Assets/Scripts/GameManager.cs" />
       <File FileName="Assets/Scripts/UIManager.cs" />
       <File FileName="Assets/Scripts/MenuUI.cs" />
-      <File FileName="Assets/Scripts/Player.cs" Line="91" Column="20" />
+      <File FileName="Assets/Scripts/Player.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -23,10 +23,8 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <DisabledProjects>
-    <String>Assembly-CSharp.csproj</String>
-  </DisabledProjects>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="bcf9fbd2-44fa-42bc-b7d1-88439b5e1f00" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
