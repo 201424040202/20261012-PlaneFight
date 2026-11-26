@@ -1,0 +1,20 @@
+# Unity
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+
+# MemoryCaptures
+/[Mm]emoryCaptures/
+
+# Asset meta data
+!**/Assets/**/*.meta
+!**/Packages/**/*.meta
+
+# Rider
+.idea/
+*.sln
+*.csproj
