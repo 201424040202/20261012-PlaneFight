@@ -140,7 +140,11 @@ public class GameManager : MonoBehaviour
 
         gameState = GameState.GameOver;
 
+        gameOverAudio.ignoreListenerVolume = true;
         gameOverAudio.Play();
+
+        // 静音
+        AudioListener.volume = 0;
 
         int bestScore = PlayerPrefs.GetInt("BestScore", 0);
         UIManager.Instance.ShowGameOverPanel(bestScore, score);
@@ -155,6 +159,8 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // 恢复音量
+        AudioListener.volume = 1;
     }
     public void QuitGame()
     {
