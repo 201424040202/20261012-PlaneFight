@@ -101,12 +101,18 @@ public class GameManager : MonoBehaviour
 
     void UseBombUpdate()
     {
+
+        // 禁止在暂停状态下使用炸弹
+        if(gameState != GameState.Playing)
+        {
+            return;
+        }
+
         if(Input.GetMouseButtonDown(0))
         {
             if(Time.time - lastClickTime < doubleClickThreshold)
             {
                 //双击处理
-                Debug.Log("DoubleClick");
                 UseBomb();
             }
             else
