@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     public bool isMouseDown = false;
 
     public float superGunDuration = 3;
-    private float superGunTimer = 0;
+    private float superGunTimer = -1;
 
     public GameObject gunTop;
     public GameObject gunRight;
@@ -34,10 +34,18 @@ public class Player : MonoBehaviour
     public AudioSource getBombAudio;
     public AudioSource getSuperGunAudio;
 
+    // 玩家碰撞体
+    private Collider2D playerCollider;
+    private bool isDead = false;
+
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        // 玩家碰撞体
+        playerCollider = GetComponent<Collider2D>();
+
     }
 
     // Update is called once per frame
@@ -46,13 +54,12 @@ public class Player : MonoBehaviour
         IdleAnimationUpdate();
         MoveUpdate();
         SuperGunUpdate();
-        InvincibleUpdate();
         DeathAnimationUpdate();
     }
 
     void IdleAnimationUpdate()
     {
-        if (!GameManager.Instance.IsAlive()) return;
+        if (isDead) return;
         timer += Time.deltaTime;
         if(timer > 1f/frameRate)
         {
@@ -64,13 +71,8 @@ public class Player : MonoBehaviour
 
     void DeathAnimationUpdate()
     {
-        if (GameManager.Instance.IsAlive()) return;
-        timer += Time.deltaTime;
-        if (timer > 1f / frameRate)
-        {
-            timer -= 1f / frameRate;
-            currentFrame++;
-        }
+        if (!isDead) return;
+        
         if(currentFrame >= deathSprites.Length)
         {
             //GameOver
@@ -80,6 +82,14 @@ public class Player : MonoBehaviour
         {
             spriteRenderer.sprite = deathSprites[currentFrame];
         }
+
+        timer += Time.deltaTime;
+        if (timer > 1f / frameRate)
+        {
+            timer -= 1f / frameRate;
+            currentFrame++;
+        }
+        
     }
 
     void MoveUpdate()
@@ -144,6 +154,12 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
+        if (isDead)
+        {
+            return;
+        }
+
         if(collision.tag == "Award")
         {
             if(collision.GetComponent<Award>().awardType == AwardType.SuperGun)
@@ -183,6 +199,12 @@ public class Player : MonoBehaviour
 
     void SuperGunUpdate()
     {
+        
+        if (isDead)
+        {
+            return;
+        }
+
         if(superGunTimer >= 0)
         {
             superGunTimer -= Time.deltaTime;
@@ -231,21 +253,27 @@ public class Player : MonoBehaviour
     // 进入死亡处理的动画
     void TransformToDeath()
     {
+
+        // 防止重复进入
+        if (isDead){
+            return;
+        }
+
+        isDead = true;
+
         DisableAllGun();
+
+        if(playerCollider != null)
+        {
+            // 不再接收敌人和奖励的触发
+            playerCollider.enabled = false;
+        }
+
+
+
         timer = 0; // 计时器归零
         currentFrame = 0;
         //this.enabled = false;
-    }
-
-    void InvincibleUpdate()
-    {
-        //if (isInvincible == false) return;
-
-        //invincibleTimer += Time.deltaTime;
-        //if(invincibleTimer > invincibleTime)
-        //{
-        //    isInvincible = false;
-        //}
     }
 
     //协程实现闪烁
